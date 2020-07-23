@@ -10,7 +10,7 @@ const Layout = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link>
-            <Link to="/products">
+            <Link to="/">
               Products
             </Link>
           </Nav.Link>

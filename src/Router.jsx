@@ -23,7 +23,7 @@ const AppRouter = () => {
         <Row>
           <Col md="10">
             <Switch>
-              <Route path="/products" component={ProductList}/>
+              <Route path="/" exact component={ProductList}/>
               <Route path="/product/:id" component={Product} />
             </Switch>
           </Col>

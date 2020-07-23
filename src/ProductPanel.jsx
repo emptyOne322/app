@@ -2,10 +2,10 @@ import React from 'react'
 import {Card, Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import {STORAGE_NAME } from './constants'
-import tryParse from './json_try_parse'
+import ParseJSON from './json_parse'
 
 const AddToLocalStorage = (value) => () => {
-  const basket = tryParse(localStorage.getItem(STORAGE_NAME))  || []
+  const basket = ParseJSON(localStorage.getItem(STORAGE_NAME))
   basket.push(value)
   localStorage.removeItem(STORAGE_NAME)
   localStorage.setItem(STORAGE_NAME, JSON.stringify(basket))

@@ -2,16 +2,14 @@ import React, { useState, useEffect, useCallback} from 'react'
 import { useSelector } from 'react-redux'
 import { Table, Button } from 'react-bootstrap'
 
-import tryParse from './json_try_parse'
+import ParseJSON from './json_parse'
 import { STORAGE_NAME } from './constants'
 
 const Basket = () => {
-  const [value] = useState(
-    () => tryParse(localStorage.getItem(STORAGE_NAME))
-  );
+  const [value, setValue] = useState(ParseJSON(localStorage.getItem(STORAGE_NAME)));
 
   const basketList = useSelector((state) => {
-    return (value || []).reduce((acc, item) => {
+    return value.reduce((acc, item) => {
       const i = state.list.find(i => i.id == item)
       if(state.list.find(i => i.id == item)) {
           acc.push(i)
@@ -19,14 +17,18 @@ const Basket = () => {
       return acc
     }, [])
   })
-  let v = value || []
+
   const remove = useCallback((id) => () => {
-    const list = tryParse(localStorage.getItem(STORAGE_NAME)) || []
-  }, [v.length])
+    const list = ParseJSON(localStorage.getItem(STORAGE_NAME))
+    list.splice(list.findIndex(i => i === id), 1)
+    localStorage.setItem(STORAGE_NAME, JSON.stringify(list));
+    setValue(list);
+  }, [value])
 
   useEffect(() => {
-    v = tryParse(localStorage.getItem(STORAGE_NAME)) || []
-  }, [v.length]);
+    console.log(value);
+    localStorage.setItem(STORAGE_NAME, JSON.stringify(value));
+  }, [value]);
 
   console.log(value);
   console.log(basketList);
