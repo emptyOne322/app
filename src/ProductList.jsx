@@ -4,7 +4,7 @@ import {Row, Col} from 'react-bootstrap'
 
 import ProductPanel from './ProductPanel'
 
-const ProductList = () => {
+const ProductList = ({addtoBasket}) => {
   const products = useSelector((state) => state.list) || []
   return (
     <div>
@@ -12,7 +12,7 @@ const ProductList = () => {
       <Row>
         {products.map((item) =>
           <Col md="auto" key={item.id}>
-            <ProductPanel  product={item} />
+            <ProductPanel  product={item} addtoBasket={addtoBasket} />
           </Col>
           )}
       </Row>

@@ -5,9 +5,7 @@ import { Table, Button } from 'react-bootstrap'
 import ParseJSON from './json_parse'
 import { STORAGE_NAME } from './constants'
 
-const Basket = () => {
-  const [value, setValue] = useState(ParseJSON(localStorage.getItem(STORAGE_NAME)));
-
+const Basket = ({addtoBasket, value}) => {
   const basketList = useSelector((state) => {
     return value.reduce((acc, item) => {
       const i = state.list.find(i => i.id == item)
@@ -22,16 +20,9 @@ const Basket = () => {
     const list = ParseJSON(localStorage.getItem(STORAGE_NAME))
     list.splice(list.findIndex(i => i === id), 1)
     localStorage.setItem(STORAGE_NAME, JSON.stringify(list));
-    setValue(list);
+    addtoBasket(list);
   }, [value])
-
-  useEffect(() => {
-    console.log(value);
-    localStorage.setItem(STORAGE_NAME, JSON.stringify(value));
-  }, [value]);
-
-  console.log(value);
-  console.log(basketList);
+  
   return (
     <div>
       <h4>

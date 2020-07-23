@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 import {STORAGE_NAME } from './constants'
 import ParseJSON from './json_parse'
 
-const AddToLocalStorage = (value) => () => {
+const AddToLocalStorage = (value, addtoBasket) => () => {
   const basket = ParseJSON(localStorage.getItem(STORAGE_NAME))
   basket.push(value)
   localStorage.removeItem(STORAGE_NAME)
   localStorage.setItem(STORAGE_NAME, JSON.stringify(basket))
+  addtoBasket(basket)
 }
 
-const ProductPanel = ({product, type}) => {
+const ProductPanel = ({product, type, addtoBasket}) => {
   const width = type === 'full'? '100%' : '15rem'
   return (
     <Card style={{ width: width }}>
@@ -28,7 +29,7 @@ const ProductPanel = ({product, type}) => {
       <Card.Text>
         Price: ${product.price}
       </Card.Text>
-      <Button variant="primary" onClick={AddToLocalStorage(product.id)}>Add to basket</Button>
+      <Button variant="primary" onClick={AddToLocalStorage(product.id, addtoBasket)}>Add to basket</Button>
     </Card.Body>
   </Card>
   )
